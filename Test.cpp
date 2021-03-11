@@ -16,8 +16,8 @@ using namespace ariel;
 using namespace std;
 const array<string,4> hats = {"_===_","  ___ \n.....", "  -\n  /_\\"," ---\n (_*_)"};
 const array<string,4> eyes = {".","o","O","-"};
-const array<string,4> noses = {",",".","_"," "};
-const array<string,4> left_arm = {"<","\\","/"," "};
+const array<string,4> nose = {",",".","_"," "};
+const array<string,4> left_arm = {"<"," ","/"," "};
 const array<string,4> right_arm = {">","/","\\"," "};
 const array<string,4> torsos = {" : ", "] [","> <", "   "};
 const array<string,4> bases = {" : ", "\" \"", "___","   "};
@@ -69,7 +69,7 @@ TEST_CASE("Good snowman code") {
         CHECK(nospaces(snowman(MIN_SNOWMAN_SIZE+(i*10000000))) == nospaces(" "+hats[i]+"\n (.,.) \n<( : )>\n ( : )\n")); //hats
     }
     for (int i = 0; i < 4; ++i) {
-        CHECK(nospaces(snowman(MIN_SNOWMAN_SIZE+(i*1000000))) == nospaces(" _===_\n (."+noses[i]+".) \n<( : )>\n ( : )\n")); //noses
+        CHECK(nospaces(snowman(MIN_SNOWMAN_SIZE+(i*1000000))) == nospaces(" _===_\n (."+nose[i]+".) \n<( : )>\n ( : )\n")); //noses
     }
     for (int i = 0; i < 4; ++i) {
         CHECK(nospaces(snowman(MIN_SNOWMAN_SIZE+(i*100000))) == nospaces(" _===_\n ("+eyes[i]+",.) \n<( : )>\n ( : )\n")); //left eye
@@ -79,22 +79,21 @@ TEST_CASE("Good snowman code") {
     }
 
     for (int i = 0; i < 4; ++i) {
-        if (i < 2)
-            CHECK(snowman(MIN_SNOWMAN_SIZE+(i*1000)) == " _===_\n (.,.) \n"+left_arm[i]+"( : )>\n ( : )\n"); //left arm
+        if (i == 1)
+            CHECK(nospaces(snowman(MIN_SNOWMAN_SIZE+(i*1000))) == nospaces(" _===_\n \\(.,.) \n( : )>\n ( : )\n")); //left arm up
         else
-            CHECK(snowman(MIN_SNOWMAN_SIZE+(i*1000)) == " _===_\n \\(.,.) \\n( : )>\n ( : )\n"); //left arm up
+            CHECK(nospaces(snowman(MIN_SNOWMAN_SIZE+(i*1000))) == nospaces(" _===_\n (.,.) \n"+left_arm[i]+"( : )>\n ( : )\n")); //left arm
 
     }
     for (int i = 0; i < 4; ++i) {
-        if (i < 2)
-            CHECK(snowman(MIN_SNOWMAN_SIZE+(i*1000)) == " _===_\n (.,"") \n<( : )"+right_arm[i]+"\n ( : )\n"); //right arm
+        if (i == 1)
+            CHECK(nospaces(snowman(MIN_SNOWMAN_SIZE+(i*100))) == nospaces(" _===_\n (.,.)/\n<( : )\n ( : )\n")); //right arm up
         else
-            CHECK(snowman(MIN_SNOWMAN_SIZE+(i*1000)) == " _===_\n \\(.,.)/\\n<( : )\n ( : )\n"); //right arm up
+            CHECK(nospaces(snowman(MIN_SNOWMAN_SIZE+(i*100))) == nospaces(" _===_\n (.,.)\n<( : )"+right_arm[i]+"\n ( : )\n")); //right arm
 
     }
-
     for (int i = 0; i < 4; ++i) {
-        CHECK(nospaces(snowman(MIN_SNOWMAN_SIZE+i*10)) == nospaces(" _===_\n (.,.) \n<("+torsos[i]+")>\n ( : )\n")); //torso
+        CHECK(nospaces(snowman(MIN_SNOWMAN_SIZE+(i*10))) == nospaces(" _===_\n (.,.) \n<("+torsos[i]+")>\n ( : )\n")); //torso
     }
     for (int i = 0; i < 4; ++i) {
         CHECK(nospaces(snowman(MIN_SNOWMAN_SIZE+i)) == nospaces(" _===_\n (.,.) \n<( : )>\n ("+bases[i]+")\n")); //base
